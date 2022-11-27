@@ -1,0 +1,156 @@
+﻿<Page x:Class="WPFKochetov.Pages.ProductsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPFKochetov.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="White"
+      Title="OrdersPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <WrapPanel Margin="8">
+                <TextBox 
+                    Name="SearchBox"
+                    Grid.Column="0"
+                    Margin="0,0,20,0"
+                    SelectionChanged="SearchBox_OnSelectionChanged"
+                />
+
+                <ComboBox
+                    Name="Filter"
+                    Grid.Column="1"
+                    Margin="0,0,20,0"
+                    SelectionChanged="Filter_OnSelectionChanged"
+                >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ManufacterName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ComboBox
+                    Name="Sorter"
+                    Grid.Column="2"
+                    Margin="0,0,20,0"
+                    SelectionChanged="Sorter_OnSelectionChanged"
+                />
+            </WrapPanel>
+
+            <WrapPanel Grid.Row="1" Margin="8">
+                <Button
+                    Name="RemoveFilter"
+                    Content="Очистить фильтр"
+                    Margin="0,0,0,0"
+                    Click="RemoveFilter_OnClick"
+                />
+
+                <Button
+                    Name="RemoveSorter"
+                    Content="Очистить сортировку"
+                    Margin="20,0,0,0"
+                    Click="RemoveSorter_OnClick"
+                />
+
+                <WrapPanel Name="AdminTools" Visibility="Hidden">
+                    <Button
+                        Name="CreateItem"
+                        Content="Создать новый"
+                        Margin="20,0,0,0"
+                        Click="CreateItem_OnClick"
+                    />
+
+                    <Button
+                        Name="EditItem"
+                        Content="Изменить элемент"
+                        Margin="20,0,0,0"
+                        Click="EditItem_OnClick"
+                    />
+
+                    <Button
+                        Name="RemoveItem"
+                        Content="Удалить элемент"
+                        Margin="20,0,0,0"
+                        Click="RemoveItem_OnClick"
+                    />
+                </WrapPanel>
+            </WrapPanel>
+        </Grid>
+        
+        
+        <ListView Grid.Row="1" Name="ListView" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Width="100" Height="100"
+                               Margin="0,0,20,0">
+                            <Image.Source>
+                                <Binding Path="ImageBitmap">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            /Images/picture.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical"
+                                    VerticalAlignment="Center">
+                            <WrapPanel>
+                                <TextBlock Text="{Binding ProductName}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <TextBlock Text="Описани: "/>
+                                <TextBlock Text="{Binding ProductDescription}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <TextBlock Text="Производитель: "/>
+                                <TextBlock Text="{Binding ProductManufacter.ManufacterName}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <TextBlock Text="Цена: "/>
+                                <TextBlock Text="{Binding ProductCost}"/>
+                            </WrapPanel>
+                        </StackPanel>
+
+                        <WrapPanel Grid.Column="2" 
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,50,0">
+                            <TextBlock Text="Кол-во на складе: "/>
+                            <TextBlock Text="{Binding ProductQuantityInStock}"/>
+                        </WrapPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <WrapPanel Grid.Row="2" Margin="8">
+            <Button
+                Name="GoBack"
+                Content="Выход"
+                Click="GoBack_OnClick"
+            />
+        </WrapPanel>
+    </Grid>
+</Page>
